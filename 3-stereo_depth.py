@@ -53,21 +53,21 @@ def cropHorizontal(image):
 # TODO: Why these values in particular?
 # TODO: Try applying brightness/contrast/gamma adjustments to the images
 stereoMatcher = cv2.StereoBM_create()
-stereoMatcher.setMinDisparity(4)
-stereoMatcher.setNumDisparities(128)
-stereoMatcher.setBlockSize(21)
-stereoMatcher.setROI1(leftROI)
-stereoMatcher.setROI2(rightROI)
-stereoMatcher.setSpeckleRange(16)
-stereoMatcher.setSpeckleWindowSize(45)
-
-# stereoMatcher.setMinDisparity(1)
-# stereoMatcher.setNumDisparities(256)
-# stereoMatcher.setBlockSize(11)
+# stereoMatcher.setMinDisparity(4)
+# stereoMatcher.setNumDisparities(128)
+# stereoMatcher.setBlockSize(21)
 # stereoMatcher.setROI1(leftROI)
 # stereoMatcher.setROI2(rightROI)
 # stereoMatcher.setSpeckleRange(16)
 # stereoMatcher.setSpeckleWindowSize(45)
+
+stereoMatcher.setMinDisparity(1)
+stereoMatcher.setNumDisparities(256)
+stereoMatcher.setBlockSize(11)
+stereoMatcher.setROI1(leftROI)
+stereoMatcher.setROI2(rightROI)
+stereoMatcher.setSpeckleRange(16)
+stereoMatcher.setSpeckleWindowSize(45)
 
 # Grab both frames first, then retrieve to minimize latency between cameras
 while(True):
@@ -98,6 +98,7 @@ while(True):
     depth = stereoMatcher.compute(grayLeft, grayRight)
     depth_image = depth / DEPTH_VISUALIZATION_SCALE
 
+    # 画像データの保存
     # cv2.imwrite(LEFT_PATH.format(frameId), fixedLeft)
     # cv2.imwrite(RIGHT_PATH.format(frameId), fixedRight)
     # cv2.imwrite(DEPTH_PATH.format(frameId), depth.astype(np.uint8))

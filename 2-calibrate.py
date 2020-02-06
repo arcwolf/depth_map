@@ -6,7 +6,7 @@ import sys
 import numpy as np
 import cv2
 
-CHESSBOARD_SIZE = (7, 10)
+CHESSBOARD_SIZE = (7, 10) # Chessboardイメージに合わせてcustomize
 CHESSBOARD_OPTIONS = (cv2.CALIB_CB_ADAPTIVE_THRESH |
         cv2.CALIB_CB_NORMALIZE_IMAGE | cv2.CALIB_CB_FAST_CHECK)
 
@@ -48,6 +48,9 @@ def readImagesAndFindChessboards(imageDirectory):
     objectPoints = []
     imagePoints = []
     imageSize = None
+    
+#     PATH = "./calibrate/{0}/{:06d}.jpg"
+    frameId = 0
 
     for imagePath in sorted(imagePaths):
         image = cv2.imread(imagePath)
@@ -72,8 +75,11 @@ def readImagesAndFindChessboards(imageDirectory):
 
         cv2.drawChessboardCorners(image, CHESSBOARD_SIZE, corners, hasCorners)
 
-        # cv2.imwrite(SAVE_PATH.format(frameId), image)
+        # 画像保存
+        cv2.imwrite("./calibrate/left/{:06d}.jpg".format(frameId), image)
+        frameId += 1
 
+        # 画像表示
         cv2.imshow(imageDirectory, image)
 
         # Needed to draw the window
